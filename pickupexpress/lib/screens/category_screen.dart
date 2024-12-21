@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pickupexpress/screens/sender_details.dart';
 
 class Category {
   final String name;
@@ -97,7 +98,13 @@ class CategoryScreen extends StatelessWidget {
                         // Order button inside the border
                         ElevatedButton(
                           onPressed: () {
-                            // Handle button press
+                             Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SenderDetails(),
+          ),
+        );                           
+           
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(

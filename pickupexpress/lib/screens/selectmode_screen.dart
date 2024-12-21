@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pickupexpress/screens/confirmation_screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Selectmode extends StatefulWidget {
   Selectmode({super.key});
@@ -11,6 +14,50 @@ class _SelectmodeState extends State<Selectmode> {
   bool _ecomode=false;
   bool _expressmode=false;
 
+  Future<void> _proceedToConfirmation() async {
+    final deliveryMode = _ecomode
+        ? "Eco mode"
+        : _expressmode
+            ? "Express mode"
+            : "None";
+
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.107.45:8000/calculate-dates/'), // Backend endpoint
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          "delivery_mode": deliveryMode,
+          // Add additional details if needed
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+
+        // Navigate to ConfirmationPage with the response data
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ConfirmationPage(
+              pickupLocation: responseData['pickup_location'],
+              pincode: responseData['pincode'],
+              parcelSize: responseData['parcel_size'],
+              parcelType: responseData['parcel_type'],
+              deliveryMode: deliveryMode,
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Failed to send data. Please try again.")),
+        );
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $error")),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -155,9 +202,9 @@ class _SelectmodeState extends State<Selectmode> {
               // Centered Proceed button
               Center(
                 child: ElevatedButton(
-                  onPressed: () {
-                    // Handle Proceed Button
-                  },
+              
+                    onPressed: _proceedToConfirmation,
+              
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF1F1049),
                     shape: RoundedRectangleBorder(

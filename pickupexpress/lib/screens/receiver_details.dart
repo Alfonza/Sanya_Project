@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pickupexpress/screens/selectmode_screen.dart';
 
 class ReceiverDetails extends StatefulWidget {
   const ReceiverDetails({super.key});
@@ -139,7 +140,13 @@ class _ReceiverDetailsState extends State<ReceiverDetails> {
                           child: ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState?.validate() ?? false) {
-                                _formKey.currentState?.save();                             
+                                _formKey.currentState?.save();  
+                                 Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Selectmode(),
+          ),
+        );                           
                               }
                             },
                             style: ElevatedButton.styleFrom(

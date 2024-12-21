@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pickupexpress/screens/receiver_details.dart';
 
 class SenderDetails extends StatefulWidget {
   const SenderDetails({super.key});
@@ -164,7 +165,13 @@ class _SenderDetailsState extends State<SenderDetails> {
                           child: ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState?.validate() ?? false) {
-                                _formKey.currentState?.save();                           
+                                _formKey.currentState?.save();   
+                                Navigator.push( context,
+                              MaterialPageRoute(
+                          builder: (context) => ReceiverDetails(),
+                        ),
+                        );
+                                                        
                     
                               }
                             },
