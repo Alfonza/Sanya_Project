@@ -1,11 +1,11 @@
 from fastapi import APIRouter,Depends
 from fastapi import HTTPException
-from schemas.classes import UserLogin,UserSignup,SenderDetails,ReceiverDetails,Tracking,Reviews,AdminLogin,AdminSignup,DeliveryPersonLogin,DeliveryPersonSignup,Details,PhoneOTP,VerifyOTP,ShippingDetails
-from models.blog import SignUpUser,DetailsSender,DetailsRecevier,Order,TrackingOrder,ReviewDetails,SignupAdmin,SignupDeliveryPerson,OTPMessage
-from config import database
-from config.otp import client,TWILIO_PHONE_NUMBER
+from app.schemas.classes import UserLogin,UserSignup,SenderDetails,ReceiverDetails,Tracking,Reviews,AdminLogin,AdminSignup,DeliveryPersonLogin,DeliveryPersonSignup,Details,PhoneOTP,VerifyOTP,ShippingDetails
+from app.models.blog import SignUpUser,DetailsSender,DetailsRecevier,Order,TrackingOrder,ReviewDetails,SignupAdmin,SignupDeliveryPerson,OTPMessage
+from app.config import database
+from app.config.otp import client,TWILIO_PHONE_NUMBER
 from sqlalchemy.orm import Session
-import models
+import app.models
 import random
 from datetime import datetime,timedelta
 
